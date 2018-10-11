@@ -1,3 +1,6 @@
 export const ADD = 'ADD'
 export const MINUS = 'MINUS'
 export const GET_USERINFO = 'GET_USERINFO'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAILE = 'LOGIN_FAILE'
+export const CLEAR_LOGIN_ERROR = 'CLEAR_LOGIN_ERROR'

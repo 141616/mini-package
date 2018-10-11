@@ -1,12 +1,13 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Input } from '@tarojs/components'
-import { AtButton, AtForm, AtInput, AtAvatar } from 'taro-ui'
+import { View } from '@tarojs/components'
+import { AtAvatar, AtToast } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { bindActionCreators } from 'redux'
 import './index.css'
+import Login from './loginForm'
 
 import * as Actions from '../../actions/counter'
-import getUserInfo from '../../actions/user'
+import { login, clearLoginError } from '../../actions/user'
 
 function mapStateToProps(state) {
   return {
@@ -18,7 +19,8 @@ function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators({
       ...Actions,
-      getUserInfo
+      login,
+      clearLoginError
     }, dispatch)
   }
 }
@@ -32,21 +34,26 @@ export default class Index extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      value: '',
-      editable: true,
-      userInfo: ''
+      logo: 'https://ss1.baidu.com/70cFfyinKgQFm2e88IuM_a/forum/pic/item/962bd40735fae6cdc6b4ba5f0db30f2442a70f8f.jpg',
+      name: '',
+      password: '',
+      showError: false
     }
   }
 
-  componentWillMount () {
-    Taro.getUserInfo({
-      success: res => {
-        this.setState({
-          userInfo: res.userInfo
-        })
-      }
-    })
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.user.isLoginedIn) {
+      Taro.navigateTo({
+        url: '../packageList/index'
+      })
+    }
+    if (nextProps.user.loginErr && nextProps.user.loginErr.message) {
+      this.setState({
+        showError: true
+      })
+    }
   }
+  componentWillMount () { }
 
   componentDidMount () { }
 
@@ -57,9 +64,30 @@ export default class Index extends Component {
   componentDidHide () { }
 
   login () {
-    Taro.navigateTo({
-      url: '../packageList/index'
+    // 请求登录
+    this.props.login({
+      name: this.state.name,
+      password: this.state.password
     })
+  }
+
+  changeName (name) {
+    this.setState({ name })
+  }
+
+  changePw (password) {
+    this.setState({ password })
+  }
+
+  onCloseError () {
+    this.props.clearLoginError()
+    this.setState({
+      showError: false
+    })
+  }
+
+  getUserInfo (info) {
+    console.log(info)
   }
 
   render () {
@@ -67,49 +95,24 @@ export default class Index extends Component {
       <View className='index'>
         <View style='width: 50px; margin: 0 auto'>
           <AtAvatar
-            circle
-            image={this.state.userInfo.avatarUrl}
+            image={this.state.logo}
             openData={{type: ''}}
           >
           </AtAvatar>
         </View>
-        <AtForm style='padding: 20px;'>
-          <AtInput
-            name='user'
-            type='text'
-            placeholder='手机号/邮箱'
-            editable={this.state.editable}
-            onChange={this.handleChange}
-            value={this.state.value}
-          />
-          <AtInput
-            name='password'
-            type='text'
-            editable={this.state.editable}
-            placeholder='密码'
-          />
-        </AtForm>
-        <Input />
-        <AtButton
-          onClick={this.login}
-          type='primary'
-        >
-          登录
-        </AtButton>
-        <View>value: {this.props.counter.num}</View>
-        <AtButton
-          onClick={this.props.add}
-          type='primary'
-        >
-          add
-        </AtButton>
-        <View>UserName: {this.props.user.userInfo.nickName}</View>
-        <AtButton
-          onClick={this.props.getUserInfo}
-          type='primary'
-        >
-          getUser
-        </AtButton>
+        <Login 
+          name={this.state.name}
+          onChangeName={this.changeName}
+          password={this.state.password}
+          onChangePw={this.changePw}
+          onLogin={this.login}
+        />
+        <AtToast
+          isOpened={this.state.showError}
+          duration={3000}
+          text={this.props.user.loginErr.message}
+          onClose={this.onCloseError}
+        ></AtToast>
       </View>
     )
   }

@@ -31,14 +31,15 @@
     "redux-immutablejs": "0.0.8",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "taro-ui": "^1.2.2"
+    "taro-ui": "^1.2.3",
+    "xlsx": "^0.14.0"
   },
   "devDependencies": {
     "@tarojs/plugin-babel": "^1.0.3",
     "@tarojs/plugin-csso": "^1.0.3",
     "@tarojs/plugin-sass": "^1.0.4",
     "@tarojs/plugin-uglifyjs": "^1.0.3",
-    "@tarojs/webpack-runner": "^1.0.3",
+    "@tarojs/webpack-runner": "^1.0.7",
     "@types/react": "16.3.14",
     "@types/webpack-env": "^1.13.6",
     "babel-eslint": "^8.2.3",
