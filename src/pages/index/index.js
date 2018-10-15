@@ -9,6 +9,12 @@ import Login from './loginForm'
 import * as Actions from '../../actions/counter'
 import { login, clearLoginError } from '../../actions/user'
 
+if (process.env.TARO_ENV === "weapp") {
+  require("taro-ui/dist/weapp/css/index.css")
+} else if (process.env.TARO_ENV === "h5") {
+  require("taro-ui/dist/h5/css/index.css")
+}
+
 function mapStateToProps(state) {
   return {
     counter: state.counter.toJS(),
@@ -53,15 +59,6 @@ export default class Index extends Component {
       })
     }
   }
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   login () {
     // 请求登录
@@ -86,8 +83,12 @@ export default class Index extends Component {
     })
   }
 
-  getUserInfo (info) {
-    console.log(info)
+  register () {
+    console.log('注册')
+  }
+
+  forgetPw () {
+    console.log('忘记密码')
   }
 
   render () {
@@ -96,7 +97,6 @@ export default class Index extends Component {
         <View style='width: 50px; margin: 0 auto'>
           <AtAvatar
             image={this.state.logo}
-            openData={{type: ''}}
           >
           </AtAvatar>
         </View>
@@ -113,6 +113,16 @@ export default class Index extends Component {
           text={this.props.user.loginErr.message}
           onClose={this.onCloseError}
         ></AtToast>
+        <View className='at-row at-row__justify--between login-tip'>
+          <View
+            onClick={this.forgetPw}
+            className='at-col at-col-3'
+          >忘记密码？</View>
+          <View
+            onClick={this.register}
+            className='at-col at-col-3' style='text-align: right;'
+          >马上注册</View>
+        </View>
       </View>
     )
   }

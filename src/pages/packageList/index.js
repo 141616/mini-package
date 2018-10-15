@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtCard } from "taro-ui"
+import Bmob from '../../utils/Bmob'
 
 export default class PackageList extends Component {
 
@@ -10,16 +11,36 @@ export default class PackageList extends Component {
 
   constructor () {
     super(...arguments)
+    this.state = {
+      packages: []
+    }
+  }
+
+  componentDidMount () {
+    const query = Bmob.Query('packages')
+    query.find().then(res => {
+      this.setState({
+        packages: res
+      })
+    })
   }
 
   render () {
     return (
       <View>
-        <AtCard
-          title='我是标题'
-        >
-          我是内容
-        </AtCard>
+        {
+          this.state.packages.map(pack => {
+            return (
+              <AtCard
+                title={pack.name}
+                thumb={pack.icon}
+                key={pack.objectId}
+              >
+                {pack.description}
+              </AtCard>
+            )
+          })
+        }
       </View>
     )
   }

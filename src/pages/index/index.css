@@ -5,3 +5,8 @@
 .form {
     padding: 20px;
 }
+
+.login-tip {
+    font-size: 0.8rem;
+    padding: 8px 0;
+}

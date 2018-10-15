@@ -1,12 +1,19 @@
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 import '@tarojs/async-await'
+// import { init } from '@rematch/core'
 
 import Index from './pages/index'
 import './app.css'
+// import packages from './models/packages'
 import configStore from './store'
 
 const store = configStore()
+// const store = init({
+//   models: {
+//     packages
+//   }
+// })
 class App extends Component {
 
   config = {
