@@ -15,6 +15,7 @@ export default createReducer(fromJS({
   [GET_USERINFO]: (state, actions) => {
     const { userInfo } = actions
     return state.merge({
+      isLoginedIn: true,
       userInfo: userInfo
     })
   },

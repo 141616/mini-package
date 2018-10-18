@@ -5,17 +5,20 @@ import {
   GET_USERINFO,
   CLEAR_LOGIN_ERROR
 } from '../constants'
+import Bmob from '../utils/Bmob'
 
 export const getUserInfo = () => {
-  return async dispatch => {
-    let userInfo = {}
-    await Taro.getUserInfo().then(data => {
-      userInfo = data.userInfo
-      dispatch({
-        type: GET_USERINFO,
-        userInfo
-      })
-    })
+  const userInfo = Bmob.User.current()
+  // const { nickName, userPic, openid } = userInfo
+  // if (nickName && userPic && openid) {
+  //   return {
+  //     type: GET_USERINFO_SUCCESS,
+  //     userInfo: userInfo
+  //   }
+  // }
+  return {
+    type: GET_USERINFO,
+    userInfo: userInfo
   }
 }
 

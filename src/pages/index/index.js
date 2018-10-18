@@ -1,13 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtAvatar, AtToast } from 'taro-ui'
+import { AtAvatar, AtToast, AtButton } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { bindActionCreators } from 'redux'
+
 import './index.css'
 import Login from './loginForm'
-
 import * as Actions from '../../actions/counter'
-import { login, clearLoginError } from '../../actions/user'
+import { login, clearLoginError, getUserInfo } from '../../actions/user'
+import Bmob from '../../utils/Bmob'
 
 if (process.env.TARO_ENV === "weapp") {
   require("taro-ui/dist/weapp/css/index.css")
@@ -26,7 +27,8 @@ function mapDispatchToProps(dispatch) {
     ...bindActionCreators({
       ...Actions,
       login,
-      clearLoginError
+      clearLoginError,
+      getUserInfo
     }, dispatch)
   }
 }
@@ -60,6 +62,10 @@ export default class Index extends Component {
     }
   }
 
+  componentDidMount () {
+    this.props.getUserInfo()
+  }
+
   login () {
     // 请求登录
     this.props.login({
@@ -89,6 +95,23 @@ export default class Index extends Component {
 
   forgetPw () {
     console.log('忘记密码')
+  }
+
+  onGetUserInfo (e) {
+    const { detail: { userInfo: user } } = e
+    console.log(user)
+    Bmob.User.upInfo(user).then(res => {
+      console.log(res)
+      this.redirect()
+    }).catch(err => {
+      console.warn(err)
+    })
+  }
+
+  redirect () {
+    Taro.navigateTo({
+      url: '../packageList/index'
+    })
   }
 
   render () {
@@ -123,6 +146,10 @@ export default class Index extends Component {
             className='at-col at-col-3' style='text-align: right;'
           >马上注册</View>
         </View>
+        <AtButton
+          openType='getUserInfo'
+          onGetUserInfo={this.onGetUserInfo}
+        >微信授权登录</AtButton>
       </View>
     )
   }

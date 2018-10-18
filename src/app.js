@@ -7,6 +7,7 @@ import Index from './pages/index'
 import './app.css'
 // import packages from './models/packages'
 import configStore from './store'
+import Bmob from './utils/Bmob'
 
 const store = configStore()
 // const store = init({
@@ -29,7 +30,13 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+    Bmob.User.auth().then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    });
+  }
 
   componentDidShow () {}
 
