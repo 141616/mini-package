@@ -49,21 +49,14 @@ export default class Index extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.user.isLoginedIn) {
-      Taro.navigateTo({
+  componentDidMount () {
+    // this.props.getUserInfo()
+    const userInfo = Bmob.User.current()
+    if(userInfo.nickName) {
+      Taro.redirectTo({
         url: '../packageList/index'
       })
     }
-    if (nextProps.user.loginErr && nextProps.user.loginErr.message) {
-      this.setState({
-        showError: true
-      })
-    }
-  }
-
-  componentDidMount () {
-    this.props.getUserInfo()
   }
 
   login () {
