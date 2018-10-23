@@ -1,0 +1,17 @@
+.float-right-bottom {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+.add-btn {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 500px;
+  box-shadow: 4px 1px 1px #cccccc;
+  background-color: #5c89e4;
+  color: #fff;
+}
+.package-card {
+  margin: 1rem 0;
+}

@@ -3,9 +3,19 @@ import Bmob from '../utils/Bmob'
 
 const query = Bmob.Query('packages')
 
-export const createPackage = () => {
-  return {
-    type: CREATE_PACKAGE
+export const createPackage = params => {
+  return dispatch => {
+    Object.keys(params).map(key => {
+      query.set(key, params[key])
+    })
+    query.save().then(res => {
+      dispatch({
+        type: CREATE_PACKAGE,
+        res
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   }
 }
 

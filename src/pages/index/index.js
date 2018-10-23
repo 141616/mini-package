@@ -5,15 +5,15 @@ import { connect } from '@tarojs/redux'
 import { bindActionCreators } from 'redux'
 
 import './index.css'
-import Login from './loginForm'
+// import Login from './loginForm'
 import * as Actions from '../../actions/counter'
 import { login, clearLoginError, getUserInfo } from '../../actions/user'
 import Bmob from '../../utils/Bmob'
 
-if (process.env.TARO_ENV === "weapp") {
-  require("taro-ui/dist/weapp/css/index.css")
-} else if (process.env.TARO_ENV === "h5") {
-  require("taro-ui/dist/h5/css/index.css")
+if (process.env.TARO_ENV === 'weapp') {
+  require('taro-ui/dist/weapp/css/index.css')
+} else if (process.env.TARO_ENV === 'h5') {
+  require('taro-ui/dist/h5/css/index.css')
 }
 
 function mapStateToProps(state) {
@@ -45,7 +45,8 @@ export default class Index extends Component {
       logo: 'https://ss1.baidu.com/70cFfyinKgQFm2e88IuM_a/forum/pic/item/962bd40735fae6cdc6b4ba5f0db30f2442a70f8f.jpg',
       name: '',
       password: '',
-      showError: false
+      showMsg: false,
+      showMsgText: ''
     }
   }
 
@@ -55,6 +56,11 @@ export default class Index extends Component {
     if(userInfo.nickName) {
       Taro.redirectTo({
         url: '../packageList/index'
+      })
+      Taro.showToast({
+        title: '登录成功',
+        icon: 'none',
+        duration: 1000
       })
     }
   }
@@ -78,7 +84,8 @@ export default class Index extends Component {
   onCloseError () {
     this.props.clearLoginError()
     this.setState({
-      showError: false
+      showMsg: false,
+      showMsgText: ''
     })
   }
 
@@ -116,20 +123,20 @@ export default class Index extends Component {
           >
           </AtAvatar>
         </View>
-        <Login 
+        {/* <Login
           name={this.state.name}
           onChangeName={this.changeName}
           password={this.state.password}
           onChangePw={this.changePw}
           onLogin={this.login}
-        />
+        /> */}
         <AtToast
-          isOpened={this.state.showError}
+          isOpened={this.state.showMsg}
           duration={3000}
-          text={this.props.user.loginErr.message}
+          text={this.state.showMsgText}
           onClose={this.onCloseError}
         ></AtToast>
-        <View className='at-row at-row__justify--between login-tip'>
+        {/* <View className='at-row at-row__justify--between login-tip'>
           <View
             onClick={this.forgetPw}
             className='at-col at-col-3'
@@ -138,7 +145,7 @@ export default class Index extends Component {
             onClick={this.register}
             className='at-col at-col-3' style='text-align: right;'
           >马上注册</View>
-        </View>
+        </View> */}
         <AtButton
           openType='getUserInfo'
           onGetUserInfo={this.onGetUserInfo}

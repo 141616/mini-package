@@ -1,4 +1,4 @@
-import Taro, { Component } from "@tarojs/taro"
+import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtButton, AtForm, AtInput } from 'taro-ui'
 
