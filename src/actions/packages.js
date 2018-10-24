@@ -11,7 +11,10 @@ export const createPackage = params => {
     query.save().then(res => {
       dispatch({
         type: CREATE_PACKAGE,
-        res
+        package: {
+          ...res,
+          ...params
+        }
       })
     }).catch(err => {
       console.log(err)

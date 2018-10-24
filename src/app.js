@@ -35,7 +35,7 @@ class App extends Component {
       console.log(res)
     }).catch(err => {
       console.log(err)
-    });
+    })
   }
 
   componentDidShow () {}

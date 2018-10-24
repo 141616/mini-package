@@ -12,7 +12,10 @@ export default createReducer(fromJS({
     })
   },
   [CREATE_PACKAGE]: (state, actions) => {
-    console.log(actions)
-    return state
+    const packagesState = state.toJS()
+    packagesState.packages.push(actions.package)
+    return state.merge({
+      packages: packagesState.packages
+    })
   }
 })
