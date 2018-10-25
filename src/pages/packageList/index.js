@@ -77,21 +77,30 @@ export default class PackageList extends Component {
     })
   }
 
+  onClickPackage (tapArg, clickArg) {
+    const { target: { dataset: data } } = clickArg
+    Taro.navigateTo({
+      url: `../package/index?objectId=${data.oid}`
+    })
+  }
+
   render () {
     const { packages } = this.props.packages
     return (
       <View>
-        {
-          packages.map(pack => {
-            return (
-              <View key={pack.objectId} className='package-card'>
-                <AtCard title={pack.name} thumb={pack.icon} >
-                  {pack.description}
-                </AtCard>
-              </View>
-            )
-          })
-        }
+        <View>
+          {
+            packages.map(pack => {
+              return (
+                <View key={pack.objectId} className='package-card'>
+                  <AtCard title={pack.name} thumb={pack.icon} onClick={this.onClickPackage} data-oid={pack.objectId}>
+                    {pack.description}
+                  </AtCard>
+                </View>
+              )
+            })
+          }
+        </View>
         <View className='float-right-bottom'>
           <Button onClick={this.create} className='add-btn'> + </Button>
         </View>
