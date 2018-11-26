@@ -11,7 +11,7 @@ import Bmob from '../../utils/Bmob'
 
 function mapStateToProps(state) {
   return {
-    packages: state.packages.toJS()
+    packagesState: state.packages.toJS()
   }
 }
 
@@ -42,7 +42,6 @@ export default class PackageList extends Component {
 
   componentDidMount () {
     this.props.getPackageList()
-    console.log(1)
   }
 
   create () {
@@ -85,7 +84,7 @@ export default class PackageList extends Component {
   }
 
   render () {
-    const { packages } = this.props.packages
+    const { packages } = this.props.packagesState
     return (
       <View>
         <View>
