@@ -1,7 +1,14 @@
 
 import * as echarts from '../components/ec-canvas/echarts'
 
-const initChart = data => {
+const chartData = (materials) => {
+  return materials && materials.map(item => ({
+    value: item.number,
+    name: item.name
+  }))
+}
+
+const chartInitFn = data => {
   return function(canvas, width, height) {
     const chart = echarts.init(canvas, null, {
       width: width,
@@ -21,7 +28,7 @@ const initChart = data => {
         roseType: true,
         center: ['50%', '50%'],
         radius: [0, '80%'],
-        data,
+        data: chartData(data),
         itemStyle: {
           emphasis: {
             shadowBlur: 10,
@@ -37,4 +44,4 @@ const initChart = data => {
   }
 }
 
-export default initChart
+export default chartInitFn
