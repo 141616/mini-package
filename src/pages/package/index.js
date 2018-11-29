@@ -28,10 +28,7 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Package extends Component {
   config = {
-    navigationBarTitleText: '明细',
-    usingComponents: {
-      'ec-canvas': '../../components/ec-canvas/ec-canvas' // 书写第三方组件的相对路径
-    }
+    navigationBarTitleText: '明细'
   }
 
   constructor () {
@@ -62,7 +59,7 @@ export default class Package extends Component {
     const { materials } = this.props.materialsState
     return (
       <View>
-        <Home isShow={this.state.current === 0} materials={materials} />
+        <Home isShow={this.state.current === 0} materials={materials} getMaterialsById={getMaterialsById} />
         <Record isShow={this.state.current === 1} />
         <Message isShow={this.state.current === 2} />
         <Me isShow={this.state.current === 3} />
