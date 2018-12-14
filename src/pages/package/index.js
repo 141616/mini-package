@@ -8,7 +8,11 @@ import Home from './home'
 import Me from './me'
 import Record from './record'
 import Message from './message'
-import { getMaterialsById } from '../../actions/materials'
+import {
+  getMaterialsById,
+  getMaterialsByType,
+  getTopMaterials
+} from '../../actions/materials'
 
 
 function mapStateToProps(state) {
@@ -20,7 +24,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators({
-      getMaterialsById
+      getMaterialsById,
+      getMaterialsByType,
+      getTopMaterials
     }, dispatch)
   }
 }
@@ -45,8 +51,14 @@ export default class Package extends Component {
   }
 
   componentWillMount () {
-    const id = this.$router.params.objectId
-    this.props.getMaterialsById(id)
+    const pid = this.$router.params.objectId
+    this.props.getMaterialsById(pid)
+    this.props.getTopMaterials({
+      pid,
+      types: ['steel', 'cement', 'block']
+    })
+    // this.props.getMaterialsByType({ id, type: 'steel' })
+    // this.props.getMaterialsByType({ id, type: 'cement' })
   }
 
   switchTab (current) {
