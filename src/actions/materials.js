@@ -49,11 +49,12 @@ export const getTopMaterials = params => {
   return dispatch => {
     query.equalTo('package_id', '==', pid)
     query.limit(3)
-    // const query1 = query.equalTo('type', '==', 'steel')
-    // const query2 = query.equalTo('type', '==', 'cement')
-    const querys = types.map(type => query.equalTo('type', '==', type))
+    const query1 = query.equalTo('type', '==', 'steel')
+    const query2 = query.equalTo('type', '==', 'cement')
+    // const querys = types.map(type => query.equalTo('type', '==', type))
     // query.or(query1, query2)
-    query.or(...querys)
+    // console.log(...querys)
+    query.or(query1, query2)
     query.find().then(res => {
       dispatch({
         type: GET_TOP_MATERIALS,

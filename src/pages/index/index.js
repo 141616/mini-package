@@ -9,6 +9,7 @@ import './index.css'
 import * as Actions from '../../actions/counter'
 import { login, clearLoginError, getUserInfo } from '../../actions/user'
 import Bmob from '../../utils/Bmob'
+import cloud from '../../utils/cloud'
 
 if (process.env.TARO_ENV === 'weapp') {
   require('taro-ui/dist/weapp/css/index.css')
@@ -63,6 +64,24 @@ export default class Index extends Component {
         duration: 1000
       })
     }
+
+    cloud.packages.get().then(data => {
+      console.log(data)
+    })
+
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: 'add',
+      // 传给云函数的参数
+      data: {
+        a: 1,
+        b: 2,
+      },
+    })
+      .then(res => {
+        console.log(res.result) // 3
+      })
+      .catch(console.error)
   }
 
   login () {

@@ -32,6 +32,9 @@ class App extends Component {
   }
 
   componentDidMount () {
+    wx.cloud.init({
+      env: 'dev-6bdf59'
+    })
     Bmob.User.auth().then(res => {
       console.log(res)
     }).catch(err => {

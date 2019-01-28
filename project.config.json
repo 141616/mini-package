@@ -1,8 +1,9 @@
 {
   "miniprogramRoot": "./dist",
+  "cloudfunctionRoot": "./cloudfunctions",
   "projectname": "mini-package",
   "description": "mini-package by taro",
-  "appid": "touristappid",
+  "appid": "wxefbfa25f821b53ee",
   "setting": {
     "urlCheck": true,
     "es6": false,

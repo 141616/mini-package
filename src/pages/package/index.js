@@ -24,9 +24,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators({
-      getMaterialsById,
-      getMaterialsByType,
-      getTopMaterials
+      dispatchGetMaterialsById: getMaterialsById,
+      dispatchGetMaterialsByType: getMaterialsByType,
+      dispatchGetTopMaterials: getTopMaterials
     }, dispatch)
   }
 }
@@ -52,8 +52,8 @@ export default class Package extends Component {
 
   componentWillMount () {
     const pid = this.$router.params.objectId
-    this.props.getMaterialsById(pid)
-    this.props.getTopMaterials({
+    this.props.dispatchGetMaterialsById(pid)
+    this.props.dispatchGetTopMaterials({
       pid,
       types: ['steel', 'cement', 'block']
     })
